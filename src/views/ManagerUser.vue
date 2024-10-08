@@ -5,14 +5,12 @@
           <v-card>
             <v-card-title class="d-flex justify-space-between">
               <h3>Quản lý người dùng</h3>
-              <!-- Nút thêm người dùng -->
               <v-btn color="primary" class="ml-4" @click="toggleForm">
                 <v-icon left>mdi-plus</v-icon>
                 Thêm người dùng
               </v-btn>
             </v-card-title>
   
-            <!-- Form thêm người dùng (import từ file khác) -->
             <AddUser
               v-if="showForm"
               :onSubmit="isEditing ? updateUser : addUser"
@@ -22,7 +20,6 @@
               :formTitle="isEditing ? 'Edit User' : 'Add User'"
             ></AddUser>
   
-            <!-- Bảng danh sách người dùng -->
             <v-data-table
               :headers="headers"
               :items="users"
@@ -34,8 +31,7 @@
                 <v-btn color="red" text @click="confirmDelete(item)">Delete</v-btn>
               </template>
             </v-data-table>
-  
-            <!-- Modal xác nhận xóa -->
+
             <v-dialog v-model="showDeleteConfirm" max-width="290">
               <v-card>
                 <v-card-title class="headline">Xác nhận xóa</v-card-title>
@@ -63,10 +59,10 @@
     data() {
       return {
         showForm: false,
-        isEditing: false, // Check if editing mode
-        currentUser: null, // Current user data
-        showDeleteConfirm: false, // State for delete confirmation modal
-        userToDelete: null, // User that is being deleted
+        isEditing: false,
+        currentUser: null,
+        showDeleteConfirm: false,
+        userToDelete: null,
         headers: [
           { text: 'STT', value: 'stt' },
           { text: 'Tên người dùng', value: 'name' },
@@ -75,7 +71,7 @@
           { text: 'Email', value: 'email' },
           { text: 'Chức năng', value: 'actions', sortable: false },
         ],
-        users: [], // List of users from localStorage
+        users: [],
       };
     },
     created() {
@@ -85,42 +81,41 @@
       toggleForm() {
         this.showForm = !this.showForm;
         if (!this.showForm) {
-          this.resetForm(); // Reset form when closed
+          this.resetForm();
         }
       },
       addUser(user) {
         const newUser = {
           ...user,
-          stt: this.users.length + 1, // Automatically add STT
+          stt: this.users.length + 1,
         };
         this.users.push(newUser);
         this.saveUsersToLocalStorage();
         this.showForm = false;
       },
       editUser(user) {
-        this.currentUser = user; // Save current user data for editing
-        this.isEditing = true; // Set editing mode
-        this.showForm = true; // Show form
+        this.currentUser = user;
+        this.isEditing = true;
+        this.showForm = true;
       },
       confirmDelete(user) {
-        this.userToDelete = user; // Save user to delete
-        this.showDeleteConfirm = true; // Show delete confirmation modal
+        this.userToDelete = user;
+        this.showDeleteConfirm = true;
       },
       cancelDelete() {
-        this.showDeleteConfirm = false; // Close modal without deleting
-        this.userToDelete = null; // Clear user to delete
+        this.showDeleteConfirm = false;
+        this.userToDelete = null;
       },
       deleteUser() {
         this.users = this.users.filter(u => u !== this.userToDelete);
-        this.updateSTT(); // Update STT after deletion
+        this.updateSTT(); 
         this.saveUsersToLocalStorage();
-        this.showDeleteConfirm = false; // Close modal after deleting
-        console.log('Đã xóa người dùng:', this.userToDelete);
-        this.userToDelete = null; // Clear user to delete
+        this.showDeleteConfirm = false; 
+        this.userToDelete = null; 
       },
       updateSTT() {
         this.users.forEach((user, index) => {
-          user.stt = index + 1; // Reassign STT
+          user.stt = index + 1; 
         });
       },
       saveUsersToLocalStorage() {
@@ -133,8 +128,8 @@
         }
       },
       resetForm() {
-        this.currentUser = null; // Reset current user data
-        this.isEditing = false; // Reset editing mode
+        this.currentUser = null; 
+        this.isEditing = false; 
       }
     }
   };

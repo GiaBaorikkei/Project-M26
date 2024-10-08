@@ -1,6 +1,6 @@
 <template>
     <v-card class="pa-4 mb-4">
-      <h4>{{ formTitle }}</h4> <!-- Update the title dynamically -->
+      <h4>{{ formTitle }}</h4>
       <v-form ref="form">
         <v-text-field
           v-model="user.name"
@@ -76,7 +76,7 @@
       type: Boolean,
       default: false
     },
-    formTitle: {  // Thêm prop cho tiêu đề
+    formTitle: {
       type: String,
       required: true
     }
